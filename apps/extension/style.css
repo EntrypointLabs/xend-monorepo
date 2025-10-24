@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.xend-popup-layout {
+  font-family: "Inter", sans-serif;
+}
+
 .xend-overlay-panel {
   position: fixed;
   top: 50%;

@@ -4,6 +4,7 @@ module.exports = {
   darkMode: "class",
   content: [
     "./popup/**/*.{tsx,jsx,ts,js}",
+    "./pages/**/*.{tsx,jsx,ts,js}",
     "./components/**/*.{tsx,jsx,ts,js}",
     "./contents/**/*.{tsx,jsx,ts,js}",
     "./background/**/*.{tsx,jsx,ts,js}",

@@ -1,5 +1,6 @@
 // Import Twitter service to register its message handlers
 import "~background/twitter-service"
+import "~background/dev-auto-open"
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "find-email") {
