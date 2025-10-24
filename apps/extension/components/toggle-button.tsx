@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
-export default function ToggleButton() {
+// Toggle Button Component
+function ToggleButton() {
   const [isOnProfile, setIsOnProfile] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
 
@@ -35,21 +36,22 @@ export default function ToggleButton() {
   }, [])
 
   const handleToggle = () => {
-    // Send toggle action - Chrome will be the source of truth
+    const newState = !isOverlayOpen
+    setIsOverlayOpen(newState)
+
+    // Send message to overlay to toggle
     chrome.runtime.sendMessage({
-      action: "toggle-overlay"
+      action: "toggle-overlay",
+      isOpen: newState
     })
   }
-
-  // Debug logging
-  console.log("ToggleButton rendering:", { isOnProfile, isOverlayOpen })
 
   return (
     <button
       onClick={handleToggle}
       style={{
         position: "fixed",
-        right: "0px",
+        right: "32px",
         top: "50%",
         zIndex: 99999,
         width: "48px",
@@ -84,3 +86,5 @@ export default function ToggleButton() {
     </button>
   )
 }
+
+export default ToggleButton

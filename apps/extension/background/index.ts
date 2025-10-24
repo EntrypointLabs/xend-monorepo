@@ -1,3 +1,6 @@
+// Import Twitter service to register its message handlers
+import "~background/twitter-service"
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "find-email") {
     // Connect to your backend
