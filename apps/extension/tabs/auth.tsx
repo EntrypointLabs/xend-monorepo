@@ -20,7 +20,7 @@ function AuthPage() {
             chrome.tabs.remove(tab.id)
           }
         })
-      }, 1000)
+      }, 100)
     }
   }, [authenticated, user])
 
