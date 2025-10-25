@@ -9,15 +9,20 @@ export default function PrivyProvider({
 }) {
   return (
     <ReactPrivyProvider
-      appId={process.env.PLASMO_PUBLIC_APP_ID}
-      clientId={process.env.PLASMO_PUBLIC_CLIENT_ID}
+      appId={process.env.PLASMO_PUBLIC_PRIVY_APP_ID}
+      clientId={process.env.PLASMO_PUBLIC_PRIVY_CLIENT_ID}
       config={{
         // Create embedded wallets for users who don't have a wallet
         embeddedWallets: {
           solana: {
             createOnLogin: "users-without-wallets"
           }
-        }
+        },
+        // Custom OAuth redirect URL pointing to backend proxy
+        // Backend will redirect to chrome-extension://<id>/popup.html with auth params
+        customOAuthRedirectUrl: process.env.PLASMO_PUBLIC_BACKEND_URL
+          ? `${process.env.PLASMO_PUBLIC_BACKEND_URL}/auth/twitter/callback`
+          : "http://localhost:8800/auth/twitter/callback"
       }}>
       {children}
     </ReactPrivyProvider>

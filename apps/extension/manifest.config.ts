@@ -1,5 +1,5 @@
 export const manifest = {
-  permissions: ["storage", "activeTab", "scripting"],
+  permissions: ["storage", "activeTab", "scripting", "tabs"],
   host_permissions: [
     "*://*.x.com/*",
     "*://*.twitter.com/*",

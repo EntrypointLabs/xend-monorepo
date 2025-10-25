@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 
+import { usePrivyMethodExecutor } from "~utils/auth-service"
 import type { FetchUserResponse, TwitterUser } from "~utils/twitter-api"
 
 const prefilledAmounts = [50, 100, 200, 500, 1000, 2000]
@@ -12,6 +13,10 @@ export default function OverlayPanel() {
   const [profileStatus, setProfileStatus] = useState<
     "idle" | "loading" | "error"
   >("idle")
+  const [isTransferring, setIsTransferring] = useState(false)
+
+  // Get Privy method executor for transactions
+  const privyExecutor = usePrivyMethodExecutor()
 
   // 🔹 Detect Twitter profile pages (for username extraction only) & 🔹 Listen for toggle messages from Chrome action
   useEffect(() => {
@@ -97,6 +102,38 @@ export default function OverlayPanel() {
       isOpen: open
     })
   }, [open])
+
+  // Handle transfer using Privy methods
+  const handleTransfer = async () => {
+    if (!selectedAmount || !privyExecutor.sendTransaction) {
+      alert("Transfer functionality not available")
+      return
+    }
+
+    setIsTransferring(true)
+    try {
+      // Example transaction - you'll need to customize this based on your needs
+      const transaction = {
+        to: "recipient-address", // You'll need to get this from the user profile
+        value: selectedAmount
+        // Add other transaction details as needed
+      }
+
+      const result = await privyExecutor.sendTransaction(transaction)
+      console.log("Transfer successful:", result)
+      alert(`Transfer of $${selectedAmount} successful!`)
+
+      // Reset form
+      setSelectedAmount(null)
+    } catch (error) {
+      console.error("Transfer failed:", error)
+      alert(
+        `Transfer failed: ${error instanceof Error ? error.message : "Unknown error"}`
+      )
+    } finally {
+      setIsTransferring(false)
+    }
+  }
 
   if (!open) return null
 
@@ -278,9 +315,11 @@ export default function OverlayPanel() {
 
         <button
           className="xend-transfer-button"
-          disabled={!selectedAmount}
-          onClick={() => alert(`Fetch contact info for ${username}`)}>
-          Transfer
+          disabled={
+            !selectedAmount || isTransferring || !privyExecutor.sendTransaction
+          }
+          onClick={handleTransfer}>
+          {isTransferring ? "Processing..." : "Transfer"}
         </button>
       </div>
     </div>
