@@ -1,15 +1,32 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useState } from "react";
+import * as Clipboard from "expo-clipboard";
 import Header from "../components/Header";
 
 export default function DepositPage() {
   const router = useRouter();
+  const [address] = useState("0x1765a9b2c3d4e5f6789012345678901234567890");
+
+  const formatAddress = (addr: string) => {
+    if (addr.length <= 10) return addr;
+    return `${addr.slice(0, 6)}...${addr.slice(-6)}`;
+  };
 
   const handleBackPress = () => {
     router.back();
+  };
+
+  const handleCopyAddress = async () => {
+    try {
+      await Clipboard.setStringAsync(address);
+      Alert.alert("Success", "Address has been copied successfully!");
+    } catch (error) {
+      Alert.alert("Error", "Failed to copy address to clipboard");
+    }
   };
 
   return (
@@ -20,31 +37,25 @@ export default function DepositPage() {
 
         <Image source={require("../assets/portal_light.png")} style={styles.glow} resizeMode="contain" />
 
-        {/* Floating Coins */}
         <Image source={require("../assets/icons/floating_coins.png")} style={styles.floatingCoins} resizeMode="contain" />
 
-        {/* Main Content */}
         <View style={styles.content}>
-          {/* Main Icon */}
           <View style={styles.mainIconContainer}>
             <View style={styles.mainIcon}>
               <Ionicons name="diamond" size={28} color="#3B82F6" />
             </View>
           </View>
 
-          {/* Text Content */}
           <Text style={styles.mainTitle}>Send USDC on Solana to this</Text>
           <Text style={styles.mainTitle}>deposit address</Text>
 
-          {/* Address Button */}
-          <TouchableOpacity style={styles.addressButton}>
-            <Text style={styles.addressText}>0x1765...B8164f</Text>
+          <TouchableOpacity style={styles.addressButton} onPress={handleCopyAddress}>
+            <Text style={styles.addressText}>{formatAddress(address)}</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Bottom Buttons */}
         <View style={styles.bottomButtons}>
-          <TouchableOpacity style={styles.copyButton}>
+          <TouchableOpacity style={styles.copyButton} onPress={handleCopyAddress}>
             <Text style={styles.copyButtonText}>Copy Address</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.requestButton}>
