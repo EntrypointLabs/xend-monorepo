@@ -1,19 +1,19 @@
+import React from "react";
 import { Pressable, View, Text, Image, StyleSheet } from "react-native";
-import type { ImageSourcePropType } from "react-native";
 
 export type ActionCardProps = {
   color: string;
-  iconSource: ImageSourcePropType;
+  icon?: React.ReactNode;
   title: string;
   subtitle: string;
   onPress?: () => void;
 };
 
-export default function ActionCard({ color, iconSource, title, subtitle, onPress }: ActionCardProps) {
+export default function ActionCard({ color, icon, title, subtitle, onPress }: ActionCardProps) {
   return (
     <Pressable style={styles.card} onPress={onPress}>
       <View style={[styles.cardIconWrap, { backgroundColor: color }]}> 
-          <Image source={iconSource} style={styles.cardIconImg} resizeMode="contain" />
+        {icon}
       </View>
       <Text style={styles.cardTitle}>{title}</Text>
       <Text style={styles.cardSubtitle}>{subtitle}</Text>

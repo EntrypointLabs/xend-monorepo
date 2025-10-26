@@ -20,7 +20,10 @@
     "react-native-screens": "^4.16.0"
   },
   "devDependencies": {
+    "@expo/metro-config": "^54.0.7",
     "@types/react": "~19.1.0",
+    "react-native-svg": "^15.14.0",
+    "react-native-svg-transformer": "^1.5.1",
     "typescript": "~5.9.2"
   },
   "private": true

@@ -1,57 +1,59 @@
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActionCard from "../components/ActionCard";
+import BottomTabs from "../components/BottomTabs";
+import CashIcon from "../assets/icons/cash.svg";
+import MoneySendIcon from "../assets/icons/money-send.svg";
+import MoneyChangeIcon from "../assets/icons/money-change.svg";
+import ReceiptDiscountIcon from "../assets/icons/receipt-discount.svg";
 
 export default function DashboardPage() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        {/* Header with avatar and address */}
         <View style={styles.headerRow}>
           <Image source={require("../assets/avi.png")} style={styles.avatar} />
           <Text style={styles.address}>Agi6lMy...mFio</Text>
         </View>
 
-        {/* Balance card */}
         <View style={styles.balanceCard}>
           <Text style={styles.balanceLabel}>Total Balance</Text>
           <Text style={styles.balanceValue}>$0<Text style={styles.balanceValueDecimal}>.00</Text></Text>
         </View>
 
-        {/* Empty state */}
         <View style={styles.emptyState}>
           <Text style={styles.emptyTitle}>Your wallet is empty</Text>
-          <Text style={styles.emptySubtitle}>Deposit funds to start sending tokens{ "\n" }seamlessly</Text>
+          <Text style={styles.emptySubtitle}>Deposit funds to start sending tokens{"\n"}seamlessly</Text>
         </View>
 
-        {/* Action grid (4 cards) */}
         <View style={styles.grid}>
           <ActionCard
-            color="#389BFF"
-            iconSource={require("../assets/icons/cash.png")}
-            title="Cash"
-            subtitle="Deposit crypto"
-          />
+          color="#389BFF"
+          icon={<MoneySendIcon width={24} height={24} />}
+          title="Cash"
+          subtitle="Deposit crypto"
+        />
           <ActionCard
             color="#FF4838"
-            iconSource={require("../assets/icons/money-send.png")}
+            icon={<MoneySendIcon width={24} height={24} />}
             title="Transfer"
             subtitle="Transfer crypto"
           />
           <ActionCard
             color="#FFA238"
-            iconSource={require("../assets/icons/money-change.png")}
+            icon={<MoneyChangeIcon width={24} height={24} />}
             title="Swap"
             subtitle="Swap crypto"
           />
           <ActionCard
             color="#6638FF"
-            iconSource={require("../assets/icons/receipt-discount.png")}
+            icon={<ReceiptDiscountIcon width={24} height={24} />}
             title="Bulk Transfer"
             subtitle="Bulk transfer crypto"
           />
         </View>
       </ScrollView>
+      <BottomTabs active="home" />
     </SafeAreaView>
   );
 }
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 20,
-    paddingBottom: 24,
+    paddingBottom: 112,
   },
   headerRow: {
     flexDirection: "row",
