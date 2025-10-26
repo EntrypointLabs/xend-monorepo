@@ -13,6 +13,15 @@ export default function Layout() {
           animation: "fade"
         }}
       />
+      <Stack.Screen
+        name="deposit"
+        options={{
+          headerShown: false,
+          title: "Deposit",
+          headerTitleAlign: "center",
+          animation: "slide_from_right"
+        }}
+      />
     </Stack>
   );
 }

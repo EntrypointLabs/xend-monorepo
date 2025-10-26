@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 import ActionCard from "../components/ActionCard";
 import BottomTabs from "../components/BottomTabs";
 import CashIcon from "../assets/icons/cash.svg";
@@ -8,6 +9,27 @@ import MoneyChangeIcon from "../assets/icons/money-change.svg";
 import ReceiptDiscountIcon from "../assets/icons/receipt-discount.svg";
 
 export default function DashboardPage() {
+  const router = useRouter();
+
+  const handleCashPress = () => {
+    router.push("/deposit");
+  };
+
+  const handleTransferPress = () => {
+    // TODO: Navigate to transfer screen
+    console.log("Transfer pressed");
+  };
+
+  const handleSwapPress = () => {
+    // TODO: Navigate to swap screen
+    console.log("Swap pressed");
+  };
+
+  const handleBulkTransferPress = () => {
+    // TODO: Navigate to bulk transfer screen
+    console.log("Bulk Transfer pressed");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
@@ -28,28 +50,32 @@ export default function DashboardPage() {
 
         <View style={styles.grid}>
           <ActionCard
-          color="#389BFF"
-          icon={<MoneySendIcon width={24} height={24} />}
-          title="Cash"
-          subtitle="Deposit crypto"
-        />
+            color="#389BFF"
+            icon={<MoneySendIcon width={24} height={24} />}
+            title="Cash"
+            subtitle="Deposit crypto"
+            onPress={handleCashPress}
+          />
           <ActionCard
             color="#FF4838"
             icon={<MoneySendIcon width={24} height={24} />}
             title="Transfer"
             subtitle="Transfer crypto"
+            onPress={handleTransferPress}
           />
           <ActionCard
             color="#FFA238"
             icon={<MoneyChangeIcon width={24} height={24} />}
             title="Swap"
             subtitle="Swap crypto"
+            onPress={handleSwapPress}
           />
           <ActionCard
             color="#6638FF"
             icon={<ReceiptDiscountIcon width={24} height={24} />}
             title="Bulk Transfer"
             subtitle="Bulk transfer crypto"
+            onPress={handleBulkTransferPress}
           />
         </View>
       </ScrollView>
