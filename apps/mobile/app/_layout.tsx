@@ -2,9 +2,17 @@ import { Stack } from "expo-router";
 
 export default function Layout() {
   return (
-    <Stack screenOptions={{ headerTitleAlign: "center" }}>
-      <Stack.Screen name="index" options={{ title: "Xend" }} />
-      <Stack.Screen name="transfer" options={{ title: "Transfer" }} />
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="dashboard"
+        options={{
+          headerShown: false,
+          title: "Dashboard",
+          headerTitleAlign: "center",
+          animation: "fade"
+        }}
+      />
     </Stack>
   );
 }
