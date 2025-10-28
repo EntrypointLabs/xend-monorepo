@@ -5,19 +5,20 @@ interface HeaderProps {
   title: string;
   onBackPress?: () => void;
   showBackButton?: boolean;
+  color?: string;
 }
 
-export default function Header({ title, onBackPress, showBackButton = true }: HeaderProps) {
+export default function Header({ title, onBackPress, showBackButton = true, color = "#FFFFFF" }: HeaderProps) {
   return (
     <View style={styles.header}>
       {showBackButton ? (
         <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
-          <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
+          <Ionicons name="chevron-back" size={24} color={color} />
         </TouchableOpacity>
       ) : (
         <View style={styles.headerSpacer} />
       )}
-      <Text style={styles.headerTitle}>{title}</Text>
+      <Text style={[styles.headerTitle, { color }]}>{title}</Text>
       <View style={styles.headerSpacer} />
     </View>
   );

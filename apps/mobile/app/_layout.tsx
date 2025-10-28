@@ -22,6 +22,24 @@ export default function Layout() {
           animation: "slide_from_right"
         }}
       />
+      <Stack.Screen
+        name="choose-recipient"
+        options={{
+          headerShown: false,
+          title: "Choose Recipient",
+          headerTitleAlign: "center",
+          animation: "slide_from_right"
+        }}
+      />
+      <Stack.Screen
+        name="send"
+        options={{
+          headerShown: false,
+          title: "Send",
+          headerTitleAlign: "center",
+          animation: "slide_from_right"
+        }}
+      />
     </Stack>
   );
 }

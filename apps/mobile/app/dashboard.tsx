@@ -16,8 +16,7 @@ export default function DashboardPage() {
   };
 
   const handleTransferPress = () => {
-    // TODO: Navigate to transfer screen
-    console.log("Transfer pressed");
+    router.push("/choose-recipient");
   };
 
   const handleSwapPress = () => {
