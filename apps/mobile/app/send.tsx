@@ -3,7 +3,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import ApprovalSheet from "../components/ApprovalSheet";
 import Header from "../components/Header";
 import UsdcIcon from "../assets/icons/usdc.svg";
 import SwapIcon from "../assets/icons/arrow-swap-horizontal.svg";
@@ -12,6 +13,10 @@ export default function SendPage() {
   const router = useRouter();
   const [amount, setAmount] = useState<string>("");
   const availableUsd = 1796.93;
+
+  const [isSheetOpen, setSheetOpen] = useState(false);
+  const openSheet = () => setSheetOpen(true);
+  const closeSheet = () => setSheetOpen(false);
 
   const handleBackPress = () => {
     router.back();
@@ -60,6 +65,11 @@ export default function SendPage() {
 
   const canProceed = !!amount && amount !== "." && Number(amount) > 0;
 
+  const handleApprove = () => {
+    closeSheet();
+    router.push({ pathname: "/success", params: { amount: displayAmount } });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
@@ -67,7 +77,6 @@ export default function SendPage() {
       <Header title="Send" onBackPress={handleBackPress} color="#111827" />
 
       <View style={styles.content}>
-        {/* Amount display */}
         <View style={styles.amountContainer}>
         <View style={styles.amountRow}>
           <View style={styles.amountLeft}>
@@ -79,14 +88,12 @@ export default function SendPage() {
           </TouchableOpacity>
         </View>
 
-        {/* USDC small line */}
         <View style={styles.usdcSmallRow}>
           <SwapIcon width={24} height={24} />
           <Text style={styles.usdcSmallText}>{usdcEquivalent}</Text>
         </View>
         </View>
 
-        {/* USDC selector row */}
         <View style={styles.tokenRow}>
           <View style={styles.tokenLeft}>
             <UsdcIcon width={24} height={24} />
@@ -99,7 +106,6 @@ export default function SendPage() {
           </View>
         </View>
 
-        {/* Keypad */}
         <View style={styles.keypad}>
           {keypad.map((k) => (
             <TouchableOpacity
@@ -110,17 +116,25 @@ export default function SendPage() {
               {k === "backspace" ? (
                 <Ionicons name="backspace-outline" size={22} color="#111827" />
               ) : (
-                <Text style={styles.keyText}>{k}</Text>
+                <Text style={styles.keyText}>{ k}</Text>
               )}
             </TouchableOpacity>
           ))}
         </View>
 
-        {/* Next button */}
-        <TouchableOpacity style={[styles.nextButton, !canProceed && styles.nextButtonDisabled]} disabled={!canProceed}>
+        <TouchableOpacity style={[styles.nextButton, !canProceed && styles.nextButtonDisabled]} disabled={!canProceed} onPress={openSheet}>
           <Text style={[styles.nextButtonText, !canProceed && styles.nextButtonTextDisabled]}>Next</Text>
         </TouchableOpacity>
       </View>
+
+      <ApprovalSheet
+        visible={isSheetOpen}
+        onRequestClose={closeSheet}
+        amountDisplay={displayAmount}
+        recipientHandle="@recipient"
+        recipientAddress="0x765...B8164f"
+        onApprove={handleApprove}
+      />
     </SafeAreaView>
   );
 }
@@ -248,5 +262,107 @@ const styles = StyleSheet.create({
   nextButtonTextDisabled: {
     color: "#FFFFFF",
     opacity: 0.8,
+  },
+
+  // Bottom sheet styles
+  sheetWrapper: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 1000,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  sheet: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "#0A2244",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  sheetHeaderIcons: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+    gap: 12,
+    marginTop: 8,
+  },
+  sheetIconCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#17365F",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sheetSwapIcon: {
+    width: 24,
+    height: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 6,
+  },
+  sheetRecipientCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sheetContent: {
+    marginTop: 16,
+    paddingHorizontal: 4,
+  },
+  sheetRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+  },
+  sheetLabel: {
+    color: "#BFD4F5",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  sheetValue: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  sheetSubValue: {
+    color: "#BFD4F5",
+    fontSize: 12,
+    marginTop: 4,
+  },
+  sheetDivider: {
+    height: 1,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    marginVertical: 8,
+  },
+  slideButton: {
+    marginTop: 18,
+    backgroundColor: "#115EBF",
+    borderRadius: 28,
+    paddingVertical: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 8,
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  slideButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
