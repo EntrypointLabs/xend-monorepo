@@ -5,8 +5,17 @@ export class CreateWalletDto {
   @IsNotEmpty()
   identifier: string;
 
-
   @IsString()
   @IsNotEmpty()
   platform: string;
+}
+
+export class CreatePrivyEmbeddedWalletByAccountIdDto {
+  @IsString()
+  @IsNotEmpty()
+  accountId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  chainType: 'solana' | 'ethereum';
 }

@@ -1,8 +1,3 @@
-import {
-  useAuth,
-  useCrossmintAuth,
-  useWallet
-} from "@crossmint/client-sdk-react-ui"
 import { useEffect, useState } from "react"
 
 import "../style.css"
@@ -15,7 +10,6 @@ import PopupHomePage from "~pages/home"
 import ProfilePage from "~pages/profile"
 import { useTab } from "~store/tabs"
 import { usePrivyAuth } from "~utils/auth-service"
-import { CROSSMINT_CLIENT_API_KEY, getCrossmintWallets } from "~utils/crossmint"
 
 function PopupRoot() {
   const [isLoading, setIsLoading] = useState(true)
@@ -25,11 +19,6 @@ function PopupRoot() {
   const { ready, authenticated, user } = privyAuth
 
   console.log("user :>> ", { user, authenticated, ready })
-
-  const [data, setData] = useState("")
-  const auth = useAuth()
-  const wallet = useWallet()
-  const crossmintAuth = useCrossmintAuth()
 
   useEffect(() => {
     setTimeout(() => {
@@ -78,23 +67,6 @@ function PopupRoot() {
     return () => chrome.runtime.onMessage.removeListener(handleMessage)
   }, [privyAuth])
 
-  const handleCreateWallet = async () => {
-    const crossmintWallets = getCrossmintWallets("client")
-
-    const wallet = await crossmintWallets.getOrCreateWallet({
-      chain: "solana",
-      signer: {
-        type: "api-key"
-      },
-      delegatedSigners: [
-        { signer: "x:_0xgifted" },
-        { signer: `api-key:${CROSSMINT_CLIENT_API_KEY}` }
-      ],
-      owner: "x:_0xgifted"
-    })
-
-    console.log("wallet", wallet)
-  }
   if (isLoading || !ready) {
     return <Loading />
   }

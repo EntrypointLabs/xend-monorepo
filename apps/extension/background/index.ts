@@ -32,6 +32,39 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     })
   }
 
+  // Handle auth state updates from popup/tabs - broadcast to all content scripts
+  if (message.type === "AUTH_STATE_UPDATE") {
+    // Broadcast to all tabs with content scripts
+    chrome.tabs.query({}, (tabs) => {
+      tabs.forEach((tab) => {
+        if (tab.id) {
+          chrome.tabs
+            .sendMessage(tab.id, {
+              type: "AUTH_STATE_CHANGED",
+              authState: message.authState
+            })
+            .catch(() => {
+              // Tab might not have content script, ignore
+            })
+        }
+      })
+    })
+    sendResponse({ success: true, authState: message.authState })
+    return true
+  }
+
+  // Handle requests for current auth state
+  if (message.type === "GET_AUTH_STATE") {
+    // sendResponse({ authState: {} })
+    console.log("GET_AUTH_STATE:>> ", message, chrome.storage.local)
+    // Read from chrome.storage and send to requester
+    chrome.storage.local.get(["authState"], (result) => {
+      console.log("result Of Auth State:>> ", result)
+      sendResponse({ authState: result.authState || null })
+    })
+    return true // keep channel open
+  }
+
   // NEW: Handle Privy method execution requests
   if (message.type === "EXECUTE_PRIVY_METHOD") {
     // Forward the request to the popup (which has PrivyProvider)

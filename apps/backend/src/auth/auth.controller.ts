@@ -1,4 +1,5 @@
 import { Controller, Get, Query, Redirect } from '@nestjs/common';
+import { PrivyClient } from '@privy-io/server-auth';
 
 @Controller('auth')
 export class AuthController {
@@ -29,6 +30,21 @@ export class AuthController {
     return {
       url: redirectUrl,
       statusCode: 302,
+    };
+  }
+
+  @Get('privy/callback')
+  async privyCallback(@Query('access_token') accessToken: string) {
+    const privy = new PrivyClient(
+      process.env.PRIVY_APP_ID!,
+      process.env.PRIVY_CLIENT_SECRET!,
+    );
+
+    const user = await privy.getUser({ idToken: accessToken });
+
+    return {
+      message: 'Privy callback received',
+      user,
     };
   }
 }

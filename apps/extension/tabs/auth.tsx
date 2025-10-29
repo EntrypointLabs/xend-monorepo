@@ -1,7 +1,6 @@
-import { usePrivy } from "@privy-io/react-auth"
 import React, { useEffect } from "react"
 
-import PrivyProvider from "~providers/privy"
+import Providers from "~providers"
 import { usePrivyAuth } from "~utils/auth-service"
 
 function AuthPage() {
@@ -64,9 +63,9 @@ function AuthPage() {
 
 function AuthTab() {
   return (
-    <PrivyProvider>
+    <Providers>
       <AuthPage />
-    </PrivyProvider>
+    </Providers>
   )
 }
 
