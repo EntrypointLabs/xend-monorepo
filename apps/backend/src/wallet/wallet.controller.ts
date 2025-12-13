@@ -1,10 +1,19 @@
-import { Controller, Post, Body, UseGuards, Query, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Query,
+  Get,
+  Headers,
+} from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import {
   CreatePrivyEmbeddedWalletByAccountIdDto,
   CreateWalletDto,
 } from './dto/create-wallet.dto';
 import { ApiKeyGuard } from '../auth/api-key.guard';
+import { TransferDto } from './dto/create-transaction';
 
 @UseGuards(ApiKeyGuard)
 @Controller('wallet')
@@ -32,5 +41,13 @@ export class WalletController {
       owner,
       tokenAddress,
     );
+  }
+
+  @Post('transfer')
+  transfer(
+    @Body() data: TransferDto,
+    @Headers('authorization') authorization: string,
+  ) {
+    return this.walletService.transfer(data, { authorization });
   }
 }

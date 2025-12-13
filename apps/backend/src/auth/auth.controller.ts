@@ -12,8 +12,7 @@ export class AuthController {
   @Redirect()
   twitterCallback(@Query() query: Record<string, string>) {
     // Get extension ID from environment variable
-    // const extensionId = process.env.CHROME_EXTENSION_ID;
-    const extensionId = 'nlnigenafbpjanphahjcdcgbepejajoj'; // TODO: Use environment variable
+    const extensionId = process.env.CHROME_EXTENSION_ID;
 
     if (!extensionId) {
       throw new Error('Chrome Extension ID not configured');

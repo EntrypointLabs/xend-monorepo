@@ -12,6 +12,7 @@ import { useBalance } from "~hooks/balance"
 import { shortenAddress } from "~utils/address"
 import { usePrivyAuth } from "~utils/auth-service"
 import { cn } from "~utils/classname"
+import { USDC_TOKEN_ADDRESS } from "~utils/constant"
 
 const actions = [
   {
@@ -44,7 +45,7 @@ const PopupHomePage = () => {
 
   const { data: balance } = useBalance({
     owner: user?.wallet?.address || "",
-    tokenAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" as const
+    tokenAddress: USDC_TOKEN_ADDRESS
   })
 
   const totalBalance = balance?.uiAmount || 0

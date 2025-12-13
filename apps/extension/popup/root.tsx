@@ -2,8 +2,6 @@ import { useEffect, useState } from "react"
 
 import "../style.css"
 
-import { usePrivy } from "@privy-io/react-auth"
-
 import Loading from "~components/loading"
 import HistoryPage from "~pages/history"
 import PopupHomePage from "~pages/home"
@@ -18,22 +16,23 @@ function PopupRoot() {
   const privyAuth = usePrivyAuth() // Get the full Privy object for method execution
   const { ready, authenticated, user } = privyAuth
 
-  console.log("user :>> ", { user, authenticated, ready })
-
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
     }, 1000)
   }, [])
 
+  const handleRedirectToAuthPage = () => {
+    chrome.tabs.create({
+      url: chrome.runtime.getURL("tabs/auth.html")
+    })
+    setAuthTabOpened(true)
+  }
+
   // Handle authentication redirect
   useEffect(() => {
     if (ready && !authenticated && !authTabOpened) {
-      // Open auth tab
-      chrome.tabs.create({
-        url: chrome.runtime.getURL("tabs/auth.html")
-      })
-      setAuthTabOpened(true)
+      handleRedirectToAuthPage()
     }
   }, [ready, authenticated, authTabOpened])
 
@@ -86,6 +85,30 @@ function PopupRoot() {
       </div>
     )
   }
+
+  const userHasXConnected = !!user?.twitter
+
+  if (!userHasXConnected) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full p-4">
+        <div className="text-center">
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            Twitter Connection Required
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Please connect your Twitter account to continue.
+          </p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
+          <button
+            onClick={handleRedirectToAuthPage}
+            className="mt-4 w-full py-3.5 text-white rounded-full bg-indigo-600">
+            Expand view to continue
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
       {activeTab === "home" && <PopupHomePage />}

@@ -4,10 +4,12 @@ import Providers from "~providers"
 import { usePrivyAuth } from "~utils/auth-service"
 
 function AuthPage() {
-  const { login, authenticated, user } = usePrivyAuth()
+  const { login, loginWithEmail, linkTwitter, authenticated, user } =
+    usePrivyAuth()
 
   useEffect(() => {
     // If user is already authenticated, close this tab and notify popup
+    // if (authenticated && user && user.twitter) {
     if (authenticated && user) {
       // Send message to background script to notify popup
       chrome.runtime.sendMessage({ type: "AUTH_SUCCESS" })
@@ -31,6 +33,30 @@ function AuthPage() {
     }
   }
 
+  const handleLinkTwitter = async () => {
+    try {
+      linkTwitter()
+    } catch (error) {
+      console.error("Login failed:", error)
+    }
+  }
+
+  // if (!authenticated || !user) {
+  //   return (
+  //     <div>
+  //       <p>Log in or Sign up</p>
+
+  //       <button
+  //         onClick={() => {
+  //           console.log("loginWithEmails :>> ")
+  //           loginWithEmail()
+  //         }}>
+  //         Continue with Email
+  //       </button>
+  //     </div>
+  //   )
+  // }
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="max-w-md w-full space-y-8 p-8">
@@ -45,9 +71,10 @@ function AuthPage() {
 
         <div className="mt-8 space-y-6">
           <button
+            // onClick={handleLinkTwitter}
             onClick={handleLogin}
             className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
-            Sign in with Privy
+            Link Twitter Account
           </button>
 
           <div className="text-center">

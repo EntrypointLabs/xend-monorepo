@@ -1,5 +1,6 @@
 import {
   useIdentityToken,
+  useLinkAccount,
   useLoginWithOAuth,
   usePrivy,
   useSolanaWallets,
@@ -22,6 +23,7 @@ export interface AuthState {
   ready: boolean
   authState: OAuthFlowState
   isAuthenticating: boolean
+  accessToken: string | null
 }
 
 // Extended interface for contexts that have PrivyProvider
@@ -45,7 +47,8 @@ class AuthService {
     authState: {
       status: "initial"
     },
-    isAuthenticating: false
+    isAuthenticating: false,
+    accessToken: null
   }
   private privyMethods: Partial<PrivyAuthState> = {}
 
@@ -168,49 +171,65 @@ export function useSharedAuth() {
     user: null,
     ready: false,
     authState: { status: "initial" },
-    isAuthenticating: false
+    isAuthenticating: false,
+    accessToken: null
   })
 
-  const [isLoading, setIsLoading] = useState(true)
-
   useEffect(() => {
-    // Request current auth state from background/popup
-    const requestAuthState = async () => {
-      try {
-        const response = await chrome.runtime.sendMessage({
-          type: "GET_AUTH_STATE"
-        })
+    // // Request current auth state from background/popup
+    // const requestAuthState = async () => {
+    //   try {
+    //     const response = await chrome.runtime.sendMessage({
+    //       type: "GET_AUTH_STATE"
+    //     })
 
-        console.log("response :>> ", response)
+    //     console.log("response :>> ", response)
 
-        if (response?.authState) {
-          setAuthState(response.authState)
-        }
-      } catch (error) {
-        console.error("Failed to request auth state:", error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
+    //     if (response?.authState) {
+    //       setAuthState(response.authState)
+    //     }
+    //   } catch (error) {
+    //     console.error("Failed to request auth state:", error)
+    //   } finally {
+    //     setIsLoading(false)
+    //   }
+    // }
 
-    requestAuthState()
+    // requestAuthState()
 
     // Listen for auth state updates
+    // const handleMessage = (message: any) => {
+    //   if (message.type === "AUTH_STATE_UPDATE") {
+    //     console.log("message :>> ", message)
+    //     setAuthState(message.authState)
+    //   }
+    // }
+
     const handleMessage = (message: any) => {
-      if (message.type === "AUTH_STATE_UPDATE") {
-        console.log("message :>> ", message)
+      if (message.type === "AUTH_STATE_CHANGED") {
+        localStorage.setItem(
+          "AUTH_STATE_CHANGED",
+          JSON.stringify(message.authState)
+        )
+
         setAuthState(message.authState)
       }
     }
 
-    chrome.runtime.onMessage.addListener(handleMessage)
+    chrome.runtime?.onMessage?.addListener(handleMessage)
+
+    // chrome.runtime.onMessage.addListener(handleMessage)
 
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage)
     }
   }, [])
 
-  return { ...authState, isLoading }
+  const localAuthState = localStorage.getItem("AUTH_STATE_CHANGED")
+    ? (JSON.parse(localStorage.getItem("AUTH_STATE_CHANGED")!) as AuthState)
+    : null
+
+  return localAuthState || authState
 }
 
 export function isEmbeddedPrivyWallet(
@@ -254,6 +273,13 @@ export function usePrivyAuth() {
       createSolanaWallet(user)
     }
   })
+
+  const { linkTwitter } = useLinkAccount({
+    onSuccess: ({ user }) => {
+      createSolanaWallet(user)
+    }
+  })
+
   const { identityToken } = useIdentityToken()
   const {
     authenticated,
@@ -262,7 +288,8 @@ export function usePrivyAuth() {
     logout,
     signTransaction,
     sendTransaction,
-    connectWallet
+    connectWallet,
+    getAccessToken
   } = privyAuth
 
   const loginWithTwitter = () => initOAuth({ provider: "twitter" })
@@ -309,35 +336,32 @@ export function usePrivyAuth() {
       isAuthenticating: loading
     }
 
-    console.log(
-      "authStateData :>> ",
-      authStateData,
-      chrome.storage?.local,
-      chrome,
-      localStorage
-    )
-
-    localStorage.setItem("myIdentityToken", identityToken)
+    // localStorage.setItem("myIdentityToken", identityToken)
 
     console.log("identityToken :>> ", identityToken)
 
     try {
+      getAccessToken()
+        .then((accessToken) => {
+          // Broadcast to content scripts via background
+          chrome.runtime
+            ?.sendMessage({
+              type: "AUTH_STATE_UPDATE",
+              authState: { ...authStateData, accessToken }
+            })
+            .catch((error) => {
+              // Background might not be ready, that's ok
+              console.warn("Error trying to broadcast auth state:", error)
+            })
+        })
+        .catch((error) => {
+          console.warn("Error trying to get access token:", error)
+        })
       // Store to chrome.storage (for popup persistence)
       chrome.storage?.local?.set({
         identityToken,
         authState: authStateData
       })
-
-      // Broadcast to content scripts via background
-      chrome.runtime
-        ?.sendMessage({
-          type: "AUTH_STATE_UPDATE",
-          authState: authStateData
-        })
-        .catch((error) => {
-          // Background might not be ready, that's ok
-          console.warn("Error trying to broadcast auth state:", error)
-        })
     } catch (error) {
       console.warn("Failed to save/broadcast auth state:", error)
     }
@@ -356,7 +380,12 @@ export function usePrivyAuth() {
     }
   }, [identityToken, authenticated, user, ready, state, loading])
 
-  return { ...privyAuth, login: loginWithTwitter }
+  return {
+    ...privyAuth,
+    login: loginWithTwitter,
+    loginWithEmail: () => privyAuth.login({ loginMethods: ["email"] }),
+    linkTwitter
+  }
 }
 
 // Hook for accessing Privy methods from any context (returns null if no Privy context available)

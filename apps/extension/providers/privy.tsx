@@ -18,20 +18,20 @@ export default function PrivyProvider({
 
         // Create embedded wallets for users who don't have a wallet
         embeddedWallets: {
-          showWalletUIs: false,
-          solana: {
-            createOnLogin: "users-without-wallets"
-          }
+          showWalletUIs: false
+          // solana: {
+          //   createOnLogin: "users-without-wallets"
+          // }
         },
         solana: {
           rpcs: {
             "solana:mainnet": {
               rpc: createSolanaRpc(
-                process.env.NEXT_PUBLIC_SOLANA_MAINNET_RPC_URL ||
+                process.env.PLASMO_PUBLIC_SOLANA_MAINNET_RPC_URL ||
                   "https://api.mainnet-beta.solana.com"
               ),
               rpcSubscriptions: createSolanaRpcSubscriptions(
-                process.env.NEXT_PUBLIC_SOLANA_MAINNET_RPC_URL?.replace(
+                process.env.PLASMO_PUBLIC_SOLANA_MAINNET_RPC_URL?.replace(
                   "http",
                   "ws"
                 ) || "wss://api.mainnet-beta.solana.com"

@@ -3,11 +3,19 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class CreateWalletDto {
   @IsString()
   @IsNotEmpty()
-  identifier: string;
+  username: string;
 
   @IsString()
   @IsNotEmpty()
-  platform: string;
+  platform: 'twitter_oauth';
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  subject: string;
 }
 
 export class CreatePrivyEmbeddedWalletByAccountIdDto {

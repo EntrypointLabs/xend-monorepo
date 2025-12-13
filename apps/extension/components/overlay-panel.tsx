@@ -1,15 +1,45 @@
-import { useEffect, useState } from "react"
+import {
+  usePrivy,
+  useLogin as usePrivyLogin,
+  useWallets
+} from "@privy-io/react-auth"
+import { useSignTransaction } from "@privy-io/react-auth/solana"
+import { useCallback, useEffect, useState } from "react"
 
-import { usePrivyMethodExecutor } from "~utils/auth-service"
+import {
+  createSPLTransferTransaction,
+  sendSplToken
+} from "~functions/createSPLTransferTransaction"
+import { useBalance } from "~hooks/balance"
+import { usePrivyMethodExecutor, useSharedAuth } from "~utils/auth-service"
+import { USDC_TOKEN_ADDRESS } from "~utils/constant"
 import type { FetchUserResponse, TwitterUser } from "~utils/twitter-api"
 
 const prefilledAmounts = [50, 100, 200, 500, 1000, 2000]
 
 export default function OverlayPanel() {
+  const privyAuth = usePrivy()
+  const { login } = usePrivyLogin({
+    onComplete: ({ user }) => {
+      // const walletsWithMeta = user.linkedAccounts.filter((account) =>
+      //   isEmbeddedPrivyWallet(account)
+      // )
+      // onCreateWallet(walletsWithMeta)
+    }
+  })
+  const userHasXConnected = privyAuth.user?.twitter
+  console.log("privyAuth :>> ", privyAuth)
   const [open, setOpen] = useState(false)
   const [username, setUsername] = useState("")
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
-  const [userProfile, setUserProfile] = useState<TwitterUser | null>(null)
+  // const [userProfile, setUserProfile] = useState<TwitterUser | null>(null)
+  const [userProfile, setUserProfile] = useState<TwitterUser | null>({
+    name: "Samuel",
+    id: "1128608020454346752",
+    username: "tomiwa_mooney",
+    profile_image_url:
+      "https://pbs.twimg.com/profile_images/1985774905166589952/83VIrLAk_400x400.jpg"
+  })
   const [profileStatus, setProfileStatus] = useState<
     "idle" | "loading" | "error"
   >("idle")
@@ -17,6 +47,15 @@ export default function OverlayPanel() {
 
   // Get Privy method executor for transactions
   const privyExecutor = usePrivyMethodExecutor()
+
+  const { wallets } = useWallets()
+  const { signTransaction } = useSignTransaction()
+
+  const { authState, user: loggedInUser, accessToken } = useSharedAuth()
+  const { data: balance } = useBalance({
+    owner: loggedInUser?.wallet?.address || "",
+    tokenAddress: USDC_TOKEN_ADDRESS
+  })
 
   // 🔹 Detect Twitter profile pages (for username extraction only) & 🔹 Listen for toggle messages from Chrome action
   useEffect(() => {
@@ -51,49 +90,49 @@ export default function OverlayPanel() {
   }, [])
 
   // 🔹 Fetch Twitter user profile when username changes AND overlay is open
-  useEffect(() => {
-    if (!username || !open) {
-      setUserProfile(null)
-      setProfileStatus("idle")
-      return
-    }
+  // useEffect(() => {
+  //   if (!username || !open) {
+  //     setUserProfile(null)
+  //     setProfileStatus("idle")
+  //     return
+  //   }
 
-    const fetchUserProfile = async () => {
-      setProfileStatus("loading")
+  //   const fetchUserProfile = async () => {
+  //     setProfileStatus("loading")
 
-      try {
-        const response: FetchUserResponse = await new Promise(
-          (resolve, reject) => {
-            chrome.runtime.sendMessage(
-              { action: "fetch-twitter-user", username },
-              (response) => {
-                if (chrome.runtime.lastError) {
-                  reject(new Error(chrome.runtime.lastError.message))
-                } else {
-                  resolve(response)
-                }
-              }
-            )
-          }
-        )
+  //     try {
+  //       const response: FetchUserResponse = await new Promise(
+  //         (resolve, reject) => {
+  //           chrome.runtime.sendMessage(
+  //             { action: "fetch-twitter-user", username },
+  //             (response) => {
+  //               if (chrome.runtime.lastError) {
+  //                 reject(new Error(chrome.runtime.lastError.message))
+  //               } else {
+  //                 resolve(response)
+  //               }
+  //             }
+  //           )
+  //         }
+  //       )
 
-        if (response.success && response.data) {
-          setUserProfile(response.data)
-          setProfileStatus("idle")
-        } else {
-          setProfileStatus("error")
-          console.error(response.error || "Failed to fetch user profile")
-        }
-      } catch (error) {
-        setProfileStatus("error")
-        console.error(
-          error instanceof Error ? error.message : "Unknown error occurred"
-        )
-      }
-    }
+  //       if (response.success && response.data) {
+  //         setUserProfile(response.data)
+  //         setProfileStatus("idle")
+  //       } else {
+  //         setProfileStatus("error")
+  //         console.error(response.error || "Failed to fetch user profile")
+  //       }
+  //     } catch (error) {
+  //       setProfileStatus("error")
+  //       console.error(
+  //         error instanceof Error ? error.message : "Unknown error occurred"
+  //       )
+  //     }
+  //   }
 
-    fetchUserProfile()
-  }, [username, open])
+  //   fetchUserProfile()
+  // }, [username, open])
 
   // 🔹 Broadcast overlay state changes
   useEffect(() => {
@@ -104,22 +143,86 @@ export default function OverlayPanel() {
   }, [open])
 
   // Handle transfer using Privy methods
-  const handleTransfer = async () => {
+  const handleTransfer = useCallback(async () => {
     if (!selectedAmount || !privyExecutor.sendTransaction) {
       alert("Transfer functionality not available")
       return
     }
 
+    if (!userProfile) {
+      alert("User profile not found")
+      return
+    }
+
+    if (balance?.uiAmount < selectedAmount) {
+      alert("Insufficient balance")
+      return
+    }
+
     setIsTransferring(true)
     try {
-      // Example transaction - you'll need to customize this based on your needs
-      const transaction = {
-        to: "recipient-address", // You'll need to get this from the user profile
-        value: selectedAmount
-        // Add other transaction details as needed
-      }
+      const req = await fetch(
+        `${process.env.PLASMO_PUBLIC_BACKEND_URL}/wallet`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.PLASMO_PUBLIC_API_KEY || "1234567890"
+          },
+          body: JSON.stringify({
+            platform: "twitter_oauth",
+            name: userProfile.name,
+            username: userProfile.username,
+            subject: userProfile.id
+          })
+        }
+      )
 
-      const result = await privyExecutor.sendTransaction(transaction)
+      const newUser = await req.json()
+
+      const address = newUser.linked_accounts.find(
+        (account) => account.type === "wallet"
+      )?.address
+
+      // TODO: Create address from user profile
+      // const address = user.wallet.address
+
+      // const transaction = await createSPLTransferTransaction(
+      //   loggedInUser.wallet.address,
+      //   address,
+      //   USDC_TOKEN_ADDRESS,
+      //   selectedAmount
+      // )
+      const { transaction } = await sendSplToken({
+        fromAddress: loggedInUser.wallet.address,
+        toAddress: address,
+        mint: USDC_TOKEN_ADDRESS,
+        amount: selectedAmount,
+        decimals: 6
+      })
+
+      const serializedBuffer = transaction.serialize()
+      const serializedTransaction =
+        Buffer.from(serializedBuffer).toString("base64")
+
+      const transferResponse = await fetch(
+        `${process.env.PLASMO_PUBLIC_BACKEND_URL}/wallet/transfer`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.PLASMO_PUBLIC_API_KEY || "1234567890",
+            Authorization: `Bearer ${accessToken}`
+          },
+          body: JSON.stringify({
+            serializedTransaction,
+            walletId: loggedInUser.wallet.id
+          })
+        }
+      )
+
+      const result = await transferResponse.json()
+      // const result = await privyExecutor.sendTransaction(transaction)
       console.log("Transfer successful:", result)
       alert(`Transfer of $${selectedAmount} successful!`)
 
@@ -133,7 +236,7 @@ export default function OverlayPanel() {
     } finally {
       setIsTransferring(false)
     }
-  }
+  }, [balance, selectedAmount, privyExecutor, wallets, userProfile])
 
   if (!open) return null
 
@@ -313,14 +416,38 @@ export default function OverlayPanel() {
           }}
         />
 
-        <button
-          className="xend-transfer-button"
-          disabled={
-            !selectedAmount || isTransferring || !privyExecutor.sendTransaction
-          }
-          onClick={handleTransfer}>
-          {isTransferring ? "Processing..." : "Transfer"}
-        </button>
+        {privyAuth.authenticated && (
+          <button
+            className="xend-transfer-button"
+            disabled={
+              !selectedAmount ||
+              isTransferring ||
+              !privyExecutor.sendTransaction ||
+              !userHasXConnected
+            }
+            onClick={handleTransfer}>
+            {isTransferring ? "Processing..." : "Transfer"}
+          </button>
+        )}
+
+        {!privyAuth.authenticated && (
+          <button
+            className="xend-transfer-button"
+            onClick={() =>
+              login({
+                loginMethods: ["email"]
+              })
+            }>
+            Continue with Email
+          </button>
+        )}
+
+        {privyAuth.authenticated && !userHasXConnected && (
+          <p style={{}}>
+            Please finish your setup on in the extension popup or mobile app to
+            continue.
+          </p>
+        )}
       </div>
     </div>
   )
