@@ -10,30 +10,40 @@ import {
 } from "~assets/icons"
 import PopupFooter from "~components/footer"
 import { useBalance } from "~hooks/balance"
+import { useTab, type TabTypes } from "~store/tabs"
 import { shortenAddress } from "~utils/address"
 import { usePrivyAuth } from "~utils/auth-service"
 import { cn } from "~utils/classname"
 import { USDC_TOKEN_ADDRESS } from "~utils/constant"
 
-const actions = [
+const actions: {
+  label: string
+  accent: string
+  tab: TabTypes
+  icon: React.JSX.Element
+}[] = [
   {
     label: "Deposit",
     accent: "#389BFF",
+    tab: "deposit",
     icon: <CashIcon width={13} height={13} />
   },
   {
     label: "Transfer",
     accent: "#FF4838",
+    tab: "transfer",
     icon: <MoneySendIcon width={13} height={13} />
   },
   {
     label: "Swap",
     accent: "#FFA238",
+    tab: "swap",
     icon: <MoneyChangeIcon width={13} height={13} />
   },
   {
     label: "Bulk Transfer",
     accent: "#6638FF",
+    tab: "bulk-transfer",
     icon: <ReceiptDiscountIcon width={13} height={13} />
   }
 ]
@@ -41,6 +51,8 @@ const actions = [
 const PopupHomePage = () => {
   const { user } = usePrivyAuth()
   const profilePicture = user?.twitter?.profilePictureUrl
+
+  const [, setActiveTab] = useTab()
 
   const { data: balance } = useBalance({
     owner: user?.wallet?.address || "",
@@ -105,6 +117,7 @@ const PopupHomePage = () => {
             {actions.map((action) => (
               <button
                 key={action.label}
+                onClick={() => setActiveTab(action.tab)}
                 className="border border-dashed border-[#C4C4C4] bg-[#f3f3f3] hover:bg-[#f3f3f3]/50 transition-colors duration-200 ease-in-out rounded-lg py-3 px-2 flex flex-col items-center gap-1">
                 <div
                   className="size-[22px] flex items-center justify-center rounded"
@@ -226,7 +239,7 @@ const PopupHomePage = () => {
         </div>
       </div>
       {/* Footer */}
-      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-16">
+      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-16 pb-24">
         <img
           src={xendIcon}
           alt="profile picture"
