@@ -52,7 +52,9 @@ const TransferPage = () => {
       </div>
       {/* Footer */}
       <div className="flex flex-col items-center justify-center gap-y-1.5 mt-auto">
-        <button className="rounded-[100px] bg-[#115EBF] p-3 text-white text-base font-medium leading-[100%] w-full">
+        <button
+          onClick={() => setActiveTab("review")}
+          className="rounded-[100px] bg-[#115EBF] p-3 text-white text-base font-medium leading-[100%] w-full">
           Transfer
         </button>
       </div>

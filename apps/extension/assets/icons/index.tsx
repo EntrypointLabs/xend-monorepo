@@ -336,6 +336,27 @@ export function ChevronLeftIcon({
   )
 }
 
+export function RightArrow({ fill, ...props }: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}>
+      <path
+        d="M7.21164 9.40859C7.11664 9.40859 7.02164 9.37359 6.94664 9.29859C6.80164 9.15359 6.80164 8.91359 6.94664 8.76859L9.71664 5.99859L6.94664 3.22859C6.80164 3.08359 6.80164 2.84359 6.94664 2.69859C7.09164 2.55359 7.33164 2.55359 7.47664 2.69859L10.5116 5.73359C10.6566 5.87859 10.6566 6.11859 10.5116 6.26359L7.47664 9.29859C7.40164 9.37359 7.30664 9.40859 7.21164 9.40859Z"
+        fill="black"
+      />
+      <path
+        d="M10.167 6.375H1.75195C1.54695 6.375 1.37695 6.205 1.37695 6C1.37695 5.795 1.54695 5.625 1.75195 5.625H10.167C10.372 5.625 10.542 5.795 10.542 6C10.542 6.205 10.372 6.375 10.167 6.375Z"
+        fill="black"
+      />
+    </svg>
+  )
+}
+
 export function CopyIcon({ fill, ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg

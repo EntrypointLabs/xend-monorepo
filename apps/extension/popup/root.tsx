@@ -7,6 +7,7 @@ import DepositPage from "~pages/deposit"
 import HistoryPage from "~pages/history"
 import PopupHomePage from "~pages/home"
 import ProfilePage from "~pages/profile"
+import ReviewPage from "~pages/review"
 import TransferPage from "~pages/transfer"
 import { useTab } from "~store/tabs"
 import { usePrivyAuth } from "~utils/auth-service"
@@ -118,6 +119,7 @@ function PopupRoot() {
       {activeTab === "profile" && <ProfilePage />}
       {activeTab === "deposit" && <DepositPage />}
       {activeTab === "transfer" && <TransferPage />}
+      {activeTab === "review" && <ReviewPage />}
     </>
   )
 }
