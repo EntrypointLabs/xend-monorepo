@@ -6,6 +6,7 @@ import Loading from "~components/loading"
 import DepositPage from "~pages/deposit"
 import HistoryPage from "~pages/history"
 import PopupHomePage from "~pages/home"
+import KeysAndRecovery from "~pages/keys-and-recovery"
 import ProfilePage from "~pages/profile"
 import ReviewPage from "~pages/review"
 import SuccessPage from "~pages/success"
@@ -122,6 +123,7 @@ function PopupRoot() {
       {activeTab === "transfer" && <TransferPage />}
       {activeTab === "review" && <ReviewPage />}
       {activeTab === "success" && <SuccessPage />}
+      {activeTab === "keys-and-recovery" && <KeysAndRecovery />}
     </>
   )
 }
