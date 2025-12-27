@@ -63,7 +63,7 @@ const DepositPage = () => {
       <div className="flex flex-col items-center justify-center gap-y-1.5 mt-auto">
         <img
           src={xendIcon}
-          alt="profile picture"
+          alt="xend icon"
           className="size-[18px] rounded-full bg-gray-100 object-cover"
         />
         <p className="text-[10.37px] leading-[16.3px] text-black/60 tracking-normal text-center">
