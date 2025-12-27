@@ -10,5 +10,5 @@ module.exports = {
     "./background/**/*.{tsx,jsx,ts,js}",
     "./*.{tsx,jsx,ts,js}"
   ],
-  plugins: []
+  plugins: [require("tailwind-scrollbar-hide")]
 }

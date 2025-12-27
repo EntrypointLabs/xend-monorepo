@@ -202,6 +202,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      tailwind-scrollbar-hide:
+        specifier: ^4.0.0
+        version: 4.0.0(tailwindcss@3.4.18(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.15))(@types/node@20.11.5)(typescript@5.3.3)))
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
@@ -9432,6 +9435,11 @@ packages:
 
   tailwind-merge@3.3.1:
     resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
+
+  tailwind-scrollbar-hide@4.0.0:
+    resolution: {integrity: sha512-gobtvVcThB2Dxhy0EeYSS1RKQJ5baDFkamkhwBvzvevwX6L4XQfpZ3me9s25Ss1ecFVT5jPYJ50n+7xTBJG9WQ==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || >= 4.0.0 || >= 4.0.0-beta.8 || >= 4.0.0-alpha.20'
 
   tailwindcss@3.4.18:
     resolution: {integrity: sha512-6A2rnmW5xZMdw11LYjhcI5846rt9pbLSabY5XPxo+XWdxwZaFEn47Go4NzFiHu9sNNmr/kXivP1vStfvMaK1GQ==}
@@ -23070,6 +23078,10 @@ snapshots:
   tabbable@6.3.0: {}
 
   tailwind-merge@3.3.1: {}
+
+  tailwind-scrollbar-hide@4.0.0(tailwindcss@3.4.18(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.15))(@types/node@20.11.5)(typescript@5.3.3))):
+    dependencies:
+      tailwindcss: 3.4.18(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.15))(@types/node@20.11.5)(typescript@5.3.3))
 
   tailwindcss@3.4.18(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.15))(@types/node@20.11.5)(typescript@5.3.3)):
     dependencies:
