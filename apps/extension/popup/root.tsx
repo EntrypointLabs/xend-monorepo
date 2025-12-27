@@ -3,9 +3,11 @@ import { useEffect, useState } from "react"
 import "../style.css"
 
 import Loading from "~components/loading"
+import DepositPage from "~pages/deposit"
 import HistoryPage from "~pages/history"
 import PopupHomePage from "~pages/home"
 import ProfilePage from "~pages/profile"
+import TransferPage from "~pages/transfer"
 import { useTab } from "~store/tabs"
 import { usePrivyAuth } from "~utils/auth-service"
 
@@ -114,6 +116,8 @@ function PopupRoot() {
       {activeTab === "home" && <PopupHomePage />}
       {activeTab === "history" && <HistoryPage />}
       {activeTab === "profile" && <ProfilePage />}
+      {activeTab === "deposit" && <DepositPage />}
+      {activeTab === "transfer" && <TransferPage />}
     </>
   )
 }
