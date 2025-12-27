@@ -336,6 +336,27 @@ export function ChevronLeftIcon({
   )
 }
 
+export function RightArrow({ fill, ...props }: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}>
+      <path
+        d="M7.21164 9.40859C7.11664 9.40859 7.02164 9.37359 6.94664 9.29859C6.80164 9.15359 6.80164 8.91359 6.94664 8.76859L9.71664 5.99859L6.94664 3.22859C6.80164 3.08359 6.80164 2.84359 6.94664 2.69859C7.09164 2.55359 7.33164 2.55359 7.47664 2.69859L10.5116 5.73359C10.6566 5.87859 10.6566 6.11859 10.5116 6.26359L7.47664 9.29859C7.40164 9.37359 7.30664 9.40859 7.21164 9.40859Z"
+        fill="black"
+      />
+      <path
+        d="M10.167 6.375H1.75195C1.54695 6.375 1.37695 6.205 1.37695 6C1.37695 5.795 1.54695 5.625 1.75195 5.625H10.167C10.372 5.625 10.542 5.795 10.542 6C10.542 6.205 10.372 6.375 10.167 6.375Z"
+        fill="black"
+      />
+    </svg>
+  )
+}
+
 export function CopyIcon({ fill, ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -354,6 +375,47 @@ export function CopyIcon({ fill, ...props }: React.SVGProps<SVGSVGElement>) {
         d="M17.0998 2H12.8998C9.81668 2 8.37074 3.09409 8.06951 5.73901C8.00649 6.29235 8.46476 6.75 9.02167 6.75H11.0998C15.2998 6.75 17.2498 8.7 17.2498 12.9V14.9781C17.2498 15.535 17.7074 15.9933 18.2608 15.9303C20.9057 15.629 21.9998 14.1831 21.9998 11.1V6.9C21.9998 3.4 20.5998 2 17.0998 2Z"
         fill="black"
         fillOpacity="0.4"
+      />
+    </svg>
+  )
+}
+
+export function UserIcon({ fill, ...props }: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}>
+      <path
+        d="M9.99967 9.99984C12.3009 9.99984 14.1663 8.13436 14.1663 5.83317C14.1663 3.53198 12.3009 1.6665 9.99967 1.6665C7.69849 1.6665 5.83301 3.53198 5.83301 5.83317C5.83301 8.13436 7.69849 9.99984 9.99967 9.99984Z"
+        stroke="#003981"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2.8418 18.3333C2.8418 15.1083 6.05015 12.5 10.0002 12.5"
+        stroke="#003981"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15.1667 17.8334C16.6394 17.8334 17.8334 16.6394 17.8334 15.1667C17.8334 13.6939 16.6394 12.5 15.1667 12.5C13.6939 12.5 12.5 13.6939 12.5 15.1667C12.5 16.6394 13.6939 17.8334 15.1667 17.8334Z"
+        stroke="#003981"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18.3333 18.3333L17.5 17.5"
+        stroke="#003981"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

@@ -9,6 +9,8 @@ export type TabTypes =
   | "transfer"
   | "swap"
   | "bulk-transfer"
+  | "review"
+  | "success"
 
 export const tabAtom = atom<TabTypes>("home")
 
