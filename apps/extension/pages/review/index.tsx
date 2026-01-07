@@ -1,11 +1,22 @@
 import usdcLarge from "data-base64:~assets/usdc-large.png"
 import React from "react"
 
-import { ChevronLeftIcon, RightArrow, UserIcon } from "~assets/icons"
+import { ChevronLeftIcon, RightArrow } from "~assets/icons"
+import { useTransferContext } from "~contexts/transfer"
+// import { useResolveWallet } from "~hooks/resolve-wallet"
 import { useTab } from "~store/tabs"
 
 const ReviewPage = () => {
   const [, setActiveTab] = useTab()
+  const { toAddress, amount } = useTransferContext()
+  const refinedAddress =
+    toAddress.charAt(0) === "@" ? toAddress.slice(1) : toAddress
+
+  // const { data: wallet, error } = useResolveWallet({
+  //   accountId: refinedAddress,
+  //   chainType: "solana"
+  // })
+
   return (
     <div className="flex flex-col gap-y-14 py-6 px-5 h-full font-sans">
       <div className="flex items-center justify-between">
@@ -35,7 +46,7 @@ const ReviewPage = () => {
           <p className="text-sm text-black leading-none">To</p>
           <div className="flex flex-col gap-1">
             <p className="text-black text-[12.73px] leading-none text-right">
-              @0xGiFTED
+              {toAddress}
             </p>
             <p className="text-black/60 text-[12.73px] leading-none text-right">
               0xt765...B8164f
@@ -46,39 +57,41 @@ const ReviewPage = () => {
           <p className="text-sm text-black leading-none">Amount</p>
           <div className="flex flex-col gap-1">
             <p className="text-black text-[12.73px] leading-none text-right">
-              666 USDC
+              ${amount}
             </p>
-            <p className="text-black/60 text-[12.73px] leading-none text-right">
+            {/* <p className="text-black/60 text-[12.73px] leading-none text-right">
               $665.12
-            </p>
+            </p> */}
           </div>
         </div>
         <div className="flex items-start justify-between">
           <p className="text-sm text-black leading-none">Network fee</p>
           <div className="flex flex-col gap-1">
             <p className="text-black text-[12.73px] leading-none text-right">
-              0.00002 USDC
+              $0
             </p>
-            <p className="text-black/60 text-[12.73px] leading-none text-right">
-              $0.00002
-            </p>
+            {/* <p className="text-black/60 text-[12.73px] leading-none text-right">
+              $0
+            </p> */}
           </div>
         </div>
         <div className="flex items-start justify-between">
           <p className="text-sm text-black leading-none">Total</p>
           <div className="flex flex-col gap-1">
             <p className="text-black text-[12.73px] leading-none text-right">
-              666.00002 USDC
+              ${amount}
             </p>
-            <p className="text-black/60 text-[12.73px] leading-none text-right">
+            {/* <p className="text-black/60 text-[12.73px] leading-none text-right">
               $666.00002
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
       {/* Footer */}
       <div className="flex items-center gap-x-[30px] mt-auto">
-        <button className="rounded-lg bg-[#E9E9E9] p-3 text-black text-base font-medium leading-none w-full">
+        <button
+          onClick={() => setActiveTab("transfer")}
+          className="rounded-lg bg-[#E9E9E9] p-3 text-black text-base font-medium leading-none w-full">
           Cancel
         </button>
         <button

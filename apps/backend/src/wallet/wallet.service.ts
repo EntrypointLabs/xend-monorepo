@@ -58,7 +58,7 @@ export class WalletService {
     });
 
     console.log('wallet :>> ', wallet);
-    return data;
+    return wallet;
   }
 
   async getTokenAccountBalanceByOwnerAndTokenAddress(

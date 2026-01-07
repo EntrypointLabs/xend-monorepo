@@ -2,13 +2,14 @@ import usdcLarge from "data-base64:~assets/usdc-large.png"
 import React, { useState } from "react"
 
 import { ChevronLeftIcon, UserIcon } from "~assets/icons"
+import { useTransferContext } from "~contexts/transfer"
 import { useBalance } from "~hooks/balance"
 import { useTab } from "~store/tabs"
 import { useSharedAuth } from "~utils/auth-service"
 import { USDC_TOKEN_ADDRESS } from "~utils/constant"
 
 const TransferPage = () => {
-  const [amount, setAmount] = useState(0)
+  const { toAddress, amount, setToAddress, setAmount } = useTransferContext()
   const [, setActiveTab] = useTab()
   const { user: loggedInUser } = useSharedAuth()
   const { data: balance } = useBalance({
@@ -33,6 +34,8 @@ const TransferPage = () => {
         <div className="relative w-full">
           <input
             type="text"
+            value={toAddress}
+            onChange={(e) => setToAddress(e.target.value)}
             className="w-full border-[0.92px] border-[#000915] rounded-[10px] py-4.5 pl-15 pr-5 text-sm font-medium text-black"
           />
           <UserIcon className="absolute top-1/2 -translate-y-1/2 left-5" />
