@@ -73,6 +73,7 @@ function ToggleButton() {
           : "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
         transform: `translateY(-50%) ${isOverlayOpen ? "rotate(45deg)" : ""}`
       }}
+      className="font-sans"
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = `translateY(-50%) scale(1.1) ${isOverlayOpen ? "rotate(45deg)" : ""}`
       }}

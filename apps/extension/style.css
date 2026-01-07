@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Satoshi-Variable";
+  src: url("./assets/fonts/Satoshi-Variable.ttf") format("truetype");
+  font-weight: 100 400 500 600 700 800 900;
+  font-style: normal;
+}
+
 .xend-popup-layout {
   font-family: "Inter", sans-serif;
 }

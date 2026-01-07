@@ -7,7 +7,7 @@ import { useTab } from "~store/tabs"
 const SuccessPage = () => {
   const [, setActiveTab] = useTab()
   return (
-    <div className="flex flex-col items-center justify-center py-6 px-5 h-full">
+    <div className="flex flex-col items-center justify-center py-6 px-5 h-full font-sans">
       <div className="flex flex-col items-center justify-center gap-y-4 text-center h-full">
         <img
           src={usdcLarge}

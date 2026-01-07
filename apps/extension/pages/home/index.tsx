@@ -71,7 +71,7 @@ const PopupHomePage = () => {
   return (
     <>
       {/* Header */}
-      <div className="border-y border-[#F2F2F2] py-3 px-5 flex items-center gap-1">
+      <div className="border-y border-[#F2F2F2] py-3 px-5 flex items-center gap-1 font-sans">
         {profilePicture ? (
           <img
             src={profilePicture}
@@ -92,7 +92,7 @@ const PopupHomePage = () => {
         </div>
       </div>
       {/* Body */}
-      <div className="py-6 px-5 flex flex-col gap-6">
+      <div className="py-6 px-5 flex flex-col gap-6 font-sans">
         <div className="flex flex-col items-start gap-y-[1.125rem]">
           <p className="text-lg font-medium text-black/40 leading-[22px] tracking-normal">
             Total Balance
@@ -239,7 +239,7 @@ const PopupHomePage = () => {
         </div>
       </div>
       {/* Footer */}
-      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-16 pb-24">
+      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-16 pb-24 font-sans">
         <img
           src={xendIcon}
           alt="xend icon"

@@ -77,7 +77,7 @@ function PopupRoot() {
 
   if (!authenticated || !user) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-4">
+      <div className="flex flex-col items-center justify-center h-full p-4 font-sans">
         <div className="text-center">
           <h3 className="text-lg font-medium text-gray-900 mb-2">
             Authentication Required
@@ -95,7 +95,7 @@ function PopupRoot() {
 
   if (!userHasXConnected) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-4">
+      <div className="flex flex-col items-center justify-center h-full p-4 font-sans">
         <div className="text-center">
           <h3 className="text-lg font-medium text-gray-900 mb-2">
             Twitter Connection Required

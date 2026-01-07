@@ -23,8 +23,9 @@ module.exports = {
       colors: {
         "brand-blue": "#115EBF",
         "border-gray": "#B8B8B8"
-        // "brand-light-blue": "#3B82F6",
-        // "brand-dark-blue": "#1E3A8A"
+      },
+      fontFamily: {
+        sans: ["Satoshi-Variable", "sans-serif"]
       }
     }
   },

@@ -12,13 +12,13 @@ import { useTab } from "~store/tabs"
 const ProfilePage = () => {
   const [, setActiveTab] = useTab()
   return (
-    <div className="flex flex-col py-6 px-5 h-full">
+    <div className="flex flex-col py-6 px-5 h-full font-sans">
       <div className="flex justify-center mb-8">
         <p className="font-medium text-lg text-black leading-[22px]">
           Settings
         </p>
       </div>
-      <div className="flex flex-col gap-y-6">
+      <div className="flex flex-col gap-y-6 font-sans">
         <button
           onClick={() => setActiveTab("keys-and-recovery")}
           className="flex items-center gap-x-3 cursor-pointer">
@@ -73,7 +73,7 @@ const ProfilePage = () => {
         </button>
       </div>
       {/* Footer */}
-      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-auto">
+      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-auto font-sans">
         <img
           src={xendIcon}
           alt="xend icon"

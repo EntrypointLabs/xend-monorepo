@@ -4,7 +4,7 @@ import PopupFooter from "~components/footer"
 
 const HistoryPage = () => {
   return (
-    <div>
+    <div className="font-sans">
       HistoryPage
       {/* Footer */}
       <PopupFooter />

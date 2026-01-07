@@ -9,7 +9,7 @@ import { useTab } from "~store/tabs"
 const DepositPage = () => {
   const [, setActiveTab] = useTab()
   return (
-    <div className="flex flex-col gap-y-[2.875rem] py-6 px-5 h-full">
+    <div className="flex flex-col gap-y-[2.875rem] py-6 px-5 h-full font-sans">
       <div className="flex items-center justify-between">
         <button className="p-1.5" onClick={() => setActiveTab("home")}>
           <ChevronLeftIcon />
