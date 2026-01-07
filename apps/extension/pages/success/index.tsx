@@ -17,14 +17,16 @@ const SuccessPage = () => {
         <p className="font-medium text-black text-base leading-[22px]">
           Successfully sent
         </p>
-        <p className="font-bold text-[#115EBF] text-2xl leading-[22px]">$500</p>
+        <p className="font-bold text-brand-blue text-2xl leading-[22px]">
+          $500
+        </p>
       </div>
 
       {/* Footer */}
       <div className="flex w-full mt-auto">
         <button
           onClick={() => setActiveTab("home")}
-          className="rounded-lg w-full bg-[#115EBF] p-3 text-white text-base font-medium leading-[100%]">
+          className="rounded-lg w-full bg-brand-blue p-3 text-white text-base font-medium leading-none">
           Confirm
         </button>
       </div>

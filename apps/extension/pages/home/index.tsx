@@ -136,7 +136,7 @@ const PopupHomePage = () => {
           </div>
         </div>
         <div className="flex flex-col gap-y-6">
-          <p className="underline text-left text-[#115EBF] text-lg font-medium leading-8 tracking-normal">
+          <p className="underline text-left text-brand-blue text-lg font-medium leading-8 tracking-normal">
             Activity
           </p>
           {/* Loop of transactions */}
@@ -243,7 +243,7 @@ const PopupHomePage = () => {
         <img
           src={xendIcon}
           alt="xend icon"
-          className="size-[18px] rounded-full bg-gray-100 object-cover"
+          className="size-4.5 rounded-full bg-gray-100 object-cover"
         />
         <p className="text-[10.37px] leading-[16.3px] text-black/60 tracking-normal text-center">
           Xend Wallet version 1.0

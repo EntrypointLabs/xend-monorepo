@@ -77,7 +77,7 @@ const ProfilePage = () => {
         <img
           src={xendIcon}
           alt="xend icon"
-          className="size-[18px] rounded-full bg-gray-100 object-cover"
+          className="size-4.5 rounded-full bg-gray-100 object-cover"
         />
         <p className="text-[10.37px] leading-[16.3px] text-black/60 tracking-normal text-center">
           Xend Wallet version 1.0

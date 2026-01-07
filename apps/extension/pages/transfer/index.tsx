@@ -26,7 +26,7 @@ const TransferPage = () => {
         <div className="relative w-full">
           <input
             type="text"
-            className="w-full border-[0.92px] border-[#000915] rounded-[10px] py-[18px] pl-[60px] pr-5 text-sm font-medium text-black"
+            className="w-full border-[0.92px] border-[#000915] rounded-[10px] py-4.5 pl-15 pr-5 text-sm font-medium text-black"
           />
           <UserIcon className="absolute top-1/2 -translate-y-1/2 left-5" />
         </div>
@@ -34,9 +34,9 @@ const TransferPage = () => {
           <div className="relative w-full">
             <input
               type="text"
-              className="w-full border-[0.92px] border-[#000915] rounded-[10px] py-[18px] pl-5 pr-[4.5rem] text-xl leading-[20.18px] font-black text-black"
+              className="w-full border-[0.92px] border-[#000915] rounded-[10px] py-4.5 pl-5 pr-[4.5rem] text-xl leading-[20.18px] font-black text-black"
             />
-            <span className="absolute right-5 top-1/2 -translate-y-1/2 text-[#115EBF] font-black text-sm leading-[12.35px]">
+            <span className="absolute right-5 top-1/2 -translate-y-1/2 text-brand-blue font-black text-sm leading-[12.35px]">
               USDC
             </span>
           </div>
@@ -54,7 +54,7 @@ const TransferPage = () => {
       <div className="flex flex-col items-center justify-center gap-y-1.5 mt-auto">
         <button
           onClick={() => setActiveTab("review")}
-          className="rounded-[100px] bg-[#115EBF] p-3 text-white text-base font-medium leading-[100%] w-full">
+          className="rounded-full bg-brand-blue p-3 text-white text-base font-medium leading-none w-full">
           Transfer
         </button>
       </div>

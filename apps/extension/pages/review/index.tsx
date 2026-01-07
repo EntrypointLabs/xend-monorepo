@@ -21,7 +21,7 @@ const ReviewPage = () => {
           alt="Solana icon"
           className="size-10 rounded-full bg-gray-100 object-cover"
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[18px] rounded-full bg-white p-0.5">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-4.5 rounded-full bg-white p-0.5">
           <RightArrow />
         </div>
         <img
@@ -32,45 +32,45 @@ const ReviewPage = () => {
       </div>
       <div className="flex flex-col gap-y-4">
         <div className="flex items-start justify-between">
-          <p className="text-sm text-black leading-[100%]">To</p>
+          <p className="text-sm text-black leading-none">To</p>
           <div className="flex flex-col gap-1">
-            <p className="text-black text-[12.73px] leading-[100%] text-right">
+            <p className="text-black text-[12.73px] leading-none text-right">
               @0xGiFTED
             </p>
-            <p className="text-black/60 text-[12.73px] leading-[100%] text-right">
+            <p className="text-black/60 text-[12.73px] leading-none text-right">
               0xt765...B8164f
             </p>
           </div>
         </div>
         <div className="flex items-start justify-between">
-          <p className="text-sm text-black leading-[100%]">Amount</p>
+          <p className="text-sm text-black leading-none">Amount</p>
           <div className="flex flex-col gap-1">
-            <p className="text-black text-[12.73px] leading-[100%] text-right">
+            <p className="text-black text-[12.73px] leading-none text-right">
               666 USDC
             </p>
-            <p className="text-black/60 text-[12.73px] leading-[100%] text-right">
+            <p className="text-black/60 text-[12.73px] leading-none text-right">
               $665.12
             </p>
           </div>
         </div>
         <div className="flex items-start justify-between">
-          <p className="text-sm text-black leading-[100%]">Network fee</p>
+          <p className="text-sm text-black leading-none">Network fee</p>
           <div className="flex flex-col gap-1">
-            <p className="text-black text-[12.73px] leading-[100%] text-right">
+            <p className="text-black text-[12.73px] leading-none text-right">
               0.00002 USDC
             </p>
-            <p className="text-black/60 text-[12.73px] leading-[100%] text-right">
+            <p className="text-black/60 text-[12.73px] leading-none text-right">
               $0.00002
             </p>
           </div>
         </div>
         <div className="flex items-start justify-between">
-          <p className="text-sm text-black leading-[100%]">Total</p>
+          <p className="text-sm text-black leading-none">Total</p>
           <div className="flex flex-col gap-1">
-            <p className="text-black text-[12.73px] leading-[100%] text-right">
+            <p className="text-black text-[12.73px] leading-none text-right">
               666.00002 USDC
             </p>
-            <p className="text-black/60 text-[12.73px] leading-[100%] text-right">
+            <p className="text-black/60 text-[12.73px] leading-none text-right">
               $666.00002
             </p>
           </div>
@@ -78,12 +78,12 @@ const ReviewPage = () => {
       </div>
       {/* Footer */}
       <div className="flex items-center gap-x-[30px] mt-auto">
-        <button className="rounded-lg bg-[#E9E9E9] p-3 text-black text-base font-medium leading-[100%] w-full">
+        <button className="rounded-lg bg-[#E9E9E9] p-3 text-black text-base font-medium leading-none w-full">
           Cancel
         </button>
         <button
           onClick={() => setActiveTab("success")}
-          className="rounded-lg bg-[#115EBF] p-3 text-white text-base font-medium leading-[100%] w-full">
+          className="rounded-lg bg-brand-blue p-3 text-white text-base font-medium leading-none w-full">
           Confirm
         </button>
       </div>
