@@ -6,7 +6,7 @@ import { useTab } from "~store/tabs"
 const PopupFooter = () => {
   const [activeTab, setActiveTab] = useTab()
   return (
-    <div className="bg-[#E7F2FF] py-5 w-full flex items-center justify-evenly fixed bottom-0 inset-x-0">
+    <div className="bg-[#E7F2FF] py-5 w-full flex items-center justify-evenly fixed bottom-0 inset-x-0 font-sans">
       <button onClick={() => setActiveTab("home")}>
         <HomeIcon
           fill={activeTab === "home" && "#115EBF"}

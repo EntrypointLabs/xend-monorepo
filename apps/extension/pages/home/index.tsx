@@ -21,6 +21,7 @@ const actions: {
   accent: string
   tab: TabTypes
   icon: React.JSX.Element
+  disabled?: boolean
 }[] = [
   {
     label: "Deposit",
@@ -38,13 +39,15 @@ const actions: {
     label: "Swap",
     accent: "#FFA238",
     tab: "swap",
-    icon: <MoneyChangeIcon width={13} height={13} />
+    icon: <MoneyChangeIcon width={13} height={13} />,
+    disabled: true
   },
   {
     label: "Bulk Transfer",
     accent: "#6638FF",
     tab: "bulk-transfer",
-    icon: <ReceiptDiscountIcon width={13} height={13} />
+    icon: <ReceiptDiscountIcon width={13} height={13} />,
+    disabled: true
   }
 ]
 
@@ -71,7 +74,7 @@ const PopupHomePage = () => {
   return (
     <>
       {/* Header */}
-      <div className="border-y border-[#F2F2F2] py-3 px-5 flex items-center gap-1">
+      <div className="border-y border-[#F2F2F2] py-3 px-5 flex items-center gap-1 font-sans">
         {profilePicture ? (
           <img
             src={profilePicture}
@@ -92,7 +95,7 @@ const PopupHomePage = () => {
         </div>
       </div>
       {/* Body */}
-      <div className="py-6 px-5 flex flex-col gap-6">
+      <div className="py-6 px-5 flex flex-col gap-6 font-sans">
         <div className="flex flex-col items-start gap-y-[1.125rem]">
           <p className="text-lg font-medium text-black/40 leading-[22px] tracking-normal">
             Total Balance
@@ -118,7 +121,8 @@ const PopupHomePage = () => {
               <button
                 key={action.label}
                 onClick={() => setActiveTab(action.tab)}
-                className="border border-dashed border-[#C4C4C4] bg-[#f3f3f3] hover:bg-[#f3f3f3]/50 transition-colors duration-200 ease-in-out rounded-lg py-3 px-2 flex flex-col items-center gap-1">
+                className="border border-dashed disabled:opacity-50 disabled:cursor-not-allowed border-[#C4C4C4] bg-[#f3f3f3] hover:bg-[#f3f3f3]/50 transition-colors duration-200 ease-in-out rounded-lg py-3 px-2 flex flex-col items-center gap-1"
+                disabled={action.disabled}>
                 <div
                   className="size-[22px] flex items-center justify-center rounded"
                   style={{
@@ -136,7 +140,7 @@ const PopupHomePage = () => {
           </div>
         </div>
         <div className="flex flex-col gap-y-6">
-          <p className="underline text-left text-[#115EBF] text-lg font-medium leading-8 tracking-normal">
+          <p className="underline text-left text-brand-blue text-lg font-medium leading-8 tracking-normal">
             Activity
           </p>
           {/* Loop of transactions */}
@@ -239,11 +243,11 @@ const PopupHomePage = () => {
         </div>
       </div>
       {/* Footer */}
-      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-16 pb-24">
+      <div className="flex flex-col items-center justify-center gap-y-1.5 mt-16 pb-24 font-sans">
         <img
           src={xendIcon}
-          alt="profile picture"
-          className="size-[18px] rounded-full bg-gray-100 object-cover"
+          alt="xend icon"
+          className="size-4.5 rounded-full bg-gray-100 object-cover"
         />
         <p className="text-[10.37px] leading-[16.3px] text-black/60 tracking-normal text-center">
           Xend Wallet version 1.0

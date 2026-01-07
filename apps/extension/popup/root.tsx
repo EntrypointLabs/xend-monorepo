@@ -6,7 +6,10 @@ import Loading from "~components/loading"
 import DepositPage from "~pages/deposit"
 import HistoryPage from "~pages/history"
 import PopupHomePage from "~pages/home"
+import KeysAndRecovery from "~pages/keys-and-recovery"
 import ProfilePage from "~pages/profile"
+import ReviewPage from "~pages/review"
+import SuccessPage from "~pages/success"
 import TransferPage from "~pages/transfer"
 import { useTab } from "~store/tabs"
 import { usePrivyAuth } from "~utils/auth-service"
@@ -74,7 +77,7 @@ function PopupRoot() {
 
   if (!authenticated || !user) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-4">
+      <div className="flex flex-col items-center justify-center h-full p-4 font-sans">
         <div className="text-center">
           <h3 className="text-lg font-medium text-gray-900 mb-2">
             Authentication Required
@@ -92,7 +95,7 @@ function PopupRoot() {
 
   if (!userHasXConnected) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-4">
+      <div className="flex flex-col items-center justify-center h-full p-4 font-sans">
         <div className="text-center">
           <h3 className="text-lg font-medium text-gray-900 mb-2">
             Twitter Connection Required
@@ -118,6 +121,9 @@ function PopupRoot() {
       {activeTab === "profile" && <ProfilePage />}
       {activeTab === "deposit" && <DepositPage />}
       {activeTab === "transfer" && <TransferPage />}
+      {activeTab === "review" && <ReviewPage />}
+      {activeTab === "success" && <SuccessPage />}
+      {activeTab === "keys-and-recovery" && <KeysAndRecovery />}
     </>
   )
 }

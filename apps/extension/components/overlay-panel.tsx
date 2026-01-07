@@ -241,7 +241,7 @@ export default function OverlayPanel() {
   if (!open) return null
 
   return (
-    <div className="xend-overlay-panel">
+    <div className="xend-overlay-panel font-sans">
       <div
         style={{
           display: "flex",

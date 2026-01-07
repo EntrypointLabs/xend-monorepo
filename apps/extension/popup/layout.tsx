@@ -9,7 +9,7 @@ export default function PopupLayout({
 }) {
   return (
     <Providers>
-      <div className="bg-white text-black w-[400px] max-w-[400px] mx-auto h-[600px] text-center scrollbar-hide overflow-y-auto overflow-x-hidden xend-popup-layout">
+      <div className="bg-white text-black w-[400px] max-w-[400px] mx-auto h-[600px] text-center scrollbar-hide overflow-y-auto overflow-x-hidden xend-popup-layout font-sans">
         {children}
       </div>
     </Providers>

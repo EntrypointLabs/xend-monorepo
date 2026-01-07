@@ -9,7 +9,7 @@ import { useTab } from "~store/tabs"
 const DepositPage = () => {
   const [, setActiveTab] = useTab()
   return (
-    <div className="flex flex-col gap-y-[2.875rem] py-6 px-5 h-full">
+    <div className="flex flex-col gap-y-[2.875rem] py-6 px-5 h-full font-sans">
       <div className="flex items-center justify-between">
         <button className="p-1.5" onClick={() => setActiveTab("home")}>
           <ChevronLeftIcon />
@@ -63,8 +63,8 @@ const DepositPage = () => {
       <div className="flex flex-col items-center justify-center gap-y-1.5 mt-auto">
         <img
           src={xendIcon}
-          alt="profile picture"
-          className="size-[18px] rounded-full bg-gray-100 object-cover"
+          alt="xend icon"
+          className="size-4.5 rounded-full bg-gray-100 object-cover"
         />
         <p className="text-[10.37px] leading-[16.3px] text-black/60 tracking-normal text-center">
           Xend Wallet version 1.0
