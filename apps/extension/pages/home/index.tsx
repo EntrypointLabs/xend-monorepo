@@ -21,6 +21,7 @@ const actions: {
   accent: string
   tab: TabTypes
   icon: React.JSX.Element
+  disabled?: boolean
 }[] = [
   {
     label: "Deposit",
@@ -38,13 +39,15 @@ const actions: {
     label: "Swap",
     accent: "#FFA238",
     tab: "swap",
-    icon: <MoneyChangeIcon width={13} height={13} />
+    icon: <MoneyChangeIcon width={13} height={13} />,
+    disabled: true
   },
   {
     label: "Bulk Transfer",
     accent: "#6638FF",
     tab: "bulk-transfer",
-    icon: <ReceiptDiscountIcon width={13} height={13} />
+    icon: <ReceiptDiscountIcon width={13} height={13} />,
+    disabled: true
   }
 ]
 
@@ -118,7 +121,8 @@ const PopupHomePage = () => {
               <button
                 key={action.label}
                 onClick={() => setActiveTab(action.tab)}
-                className="border border-dashed border-[#C4C4C4] bg-[#f3f3f3] hover:bg-[#f3f3f3]/50 transition-colors duration-200 ease-in-out rounded-lg py-3 px-2 flex flex-col items-center gap-1">
+                className="border border-dashed disabled:opacity-50 disabled:cursor-not-allowed border-[#C4C4C4] bg-[#f3f3f3] hover:bg-[#f3f3f3]/50 transition-colors duration-200 ease-in-out rounded-lg py-3 px-2 flex flex-col items-center gap-1"
+                disabled={action.disabled}>
                 <div
                   className="size-[22px] flex items-center justify-center rounded"
                   style={{
