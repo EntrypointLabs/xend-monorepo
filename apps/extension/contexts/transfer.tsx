@@ -1,15 +1,15 @@
 import { createContext, useContext } from "react"
 
 interface TransferContextType {
-  toAddress: string | null
-  amount: number | null
+  toAddress: string
+  amount: number
   setToAddress: (address: string) => void
   setAmount: (amount: number) => void
 }
 
 export const TransferContext = createContext<TransferContextType>({
-  toAddress: null,
-  amount: null,
+  toAddress: "",
+  amount: 0,
   setToAddress: () => {},
   setAmount: () => {}
 })
